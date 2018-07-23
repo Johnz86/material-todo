@@ -6,6 +6,7 @@ import TableRow from '@material-ui/core/TableRow/TableRow';
 
 import { todosActions, todosModels, todosSelectors } from '../';
 import { RootState } from '../../../store';
+import TodoForm from './todo-form';
 import TodoItem from './todo-item';
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
 function TodoList({ todos = [], toggleTodo }: Props) {
   return (
     <TableBody>
+      <TodoForm />
       {todos.map(todo => (
         <TableRow key={todo.id}>
           <TodoItem item={todo} toggleItem={

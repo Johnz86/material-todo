@@ -9,14 +9,10 @@ import TableHead from '@material-ui/core/TableHead/TableHead';
 import TableRow from '@material-ui/core/TableRow/TableRow';
 
 import TodoFilters from './todo-filters';
-import TodoForm from './todo-form';
 import TodoList from './todo-list';
 
 export default () => (
   <Grid container spacing={8}>
-    <Grid item={true} xs={12}>
-      <TodoForm />
-    </Grid>
     <Grid item xs={12}>
       <Paper>
         <Table>

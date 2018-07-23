@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button/Button';
 import Grid from '@material-ui/core/Grid/Grid';
-import TextField from '@material-ui/core/TextField/TextField';
+import Input from '@material-ui/core/Input/Input';
+import TableCell from '@material-ui/core/TableCell/TableCell';
+import TableRow from '@material-ui/core/TableRow/TableRow';
 import { todosActions } from '../';
-import { RootState } from '../../../store';
 
 interface Props {
   addTodo: (title: string) => any;
@@ -17,7 +18,7 @@ interface State {
 class TodoForm extends React.Component<Props, State> {
   public readonly state: Readonly<State> = { title: '' };
 
-  public handleTitleChange: React.ReactEventHandler<HTMLInputElement> = ev => {
+  public handleTitleChange: React.ReactEventHandler<HTMLTextAreaElement | HTMLInputElement> = ev => {
     this.setState({ title: ev.currentTarget.value });
   };
 
@@ -31,28 +32,31 @@ class TodoForm extends React.Component<Props, State> {
     const { title } = this.state;
 
     return (
-      <form onSubmit={this.handleAdd}>
-        <Grid container spacing={8} alignItems="baseline">
-          <Grid item>
-            <TextField
-              id="multiline-flexible"
-              label="Enter new todo"
-              value={title}
-              onChange={this.handleTitleChange}
-              margin="normal"
-            />
-          </Grid>
-          <Grid item>
-            <Button variant="contained" onClick={this.handleAdd} disabled={!title}> Add</Button>
-          </Grid>
-        </Grid>
-      </form>
+      <TableRow>
+        <TableCell>
+          <form onSubmit={this.handleAdd}>
+            <Grid container spacing={8} wrap="nowrap" alignContent="flex-end">
+              <Grid item xs={8} md={10}>
+              <Input
+                id="todo-form"
+                type="text"
+                value={title}
+                fullWidth={true}
+                placeholder="Your new To Do task assignment"
+                onChange={this.handleTitleChange}
+              />
+              </Grid>
+              <Grid item xs zeroMinWidth>
+                <Button variant="contained" onClick={this.handleAdd} disabled={!title} aria-label="Add todo item">Add</Button>
+              </Grid>
+            </Grid>
+          </form>
+        </TableCell>
+      </TableRow>
     );
   }
 }
 
-const mapStateToProps = (state: RootState) => ({});
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   addTodo: (title: string) => todosActions.add({ title }),
 })(TodoForm);
