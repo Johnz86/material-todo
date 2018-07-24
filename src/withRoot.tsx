@@ -1,3 +1,5 @@
+import pink from '@material-ui/core/colors/pink';
+import red from '@material-ui/core/colors/red';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import * as React from 'react';
@@ -6,19 +8,13 @@ import * as React from 'react';
 // It's optional.
 const theme = createMuiTheme({
   palette: {
-    primary: {
-      contrastText: '#fff',
-      dark: '#363839',
-      light: '#e5e5e5',
-      main: '#727272',
+    error: red,
+    primary:  {
+      main: '#FFFFFF',
     },
-    secondary: {
-      contrastText: '#fff',
-      dark: '#a90000',
-      light: '#ff5e50',
-      main: '#e41e26',
-    }
-  }
+    secondary: pink,
+    type: 'light'
+  },
 });
 
 function withRoot(Component: React.ComponentType) {

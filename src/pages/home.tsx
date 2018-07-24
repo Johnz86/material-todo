@@ -10,9 +10,13 @@ import withStyles, { StyleRulesCallback, WithStyles } from '@material-ui/core/st
 import Toolbar from '@material-ui/core/Toolbar/Toolbar';
 import Typography from '@material-ui/core/Typography/Typography';
 import Home from '@material-ui/icons/Home';
+import { Route } from 'react-router';
+import About from '../features/about/components/description';
 import Todos from '../features/todos/components/main';
+import logo from '../logo.svg';
 import withRoot from '../withRoot';
 import { mailFolderListItems } from './list-items';
+import NavigationTabs from './nav-tab';
 
 const drawerWidth = 240;
 const styles: StyleRulesCallback = theme => ({
@@ -22,6 +26,11 @@ const styles: StyleRulesCallback = theme => ({
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
+  },
+  appLogo: {
+    height: '2.5em',
+    padding: '0.5em 1em 0.5em 1em',
+    width: '100%'
   },
   content: {
     backgroundColor: theme.palette.background.default,
@@ -48,7 +57,9 @@ const styles: StyleRulesCallback = theme => ({
     width: '100%',
     zIndex: 1,
   },
-  toolbar: theme.mixins.toolbar,
+  toolbar: {
+    height: '48px'
+  }
 });
 
 export namespace App {
@@ -68,7 +79,9 @@ class App extends React.Component<WithStyles<string>, App.State> {
     const { classes, theme } = this.props;
     const drawer = (
       <div>
-        <div className={classes.toolbar} />
+        <div className={classes.toolbar}>
+          <img src={logo} className={classes.appLogo} alt="logo" />
+        </div>
         <Divider />
         <List>{mailFolderListItems}</List>
       </div>
@@ -76,12 +89,13 @@ class App extends React.Component<WithStyles<string>, App.State> {
     return (
       <div className={classes.root}>
         <AppBar className={classes.appBar}>
-          <Toolbar>
+          <Toolbar variant="dense">
             <IconButton color="inherit" aria-label="open drawer" onClick={this.handleDrawerToggle} className={classes.navIconHide}>
               <Home />
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap={true}>Simple ToDo</Typography>
-          </Toolbar>
+            <Typography variant="title" color="inherit" noWrap={true}>DICOM Image Pool</Typography>
+            <NavigationTabs />
+          </Toolbar>        
         </AppBar>
         <Hidden mdUp={true}>
           <Drawer variant="temporary"
@@ -103,7 +117,8 @@ class App extends React.Component<WithStyles<string>, App.State> {
         </Hidden>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Todos/>
+          <Route exact={true} path="/home" component={About} />
+          <Route exact={true} path="/todo" component={Todos} />
         </main>
       </div>
     );

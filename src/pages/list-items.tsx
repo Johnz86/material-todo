@@ -6,32 +6,38 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import SendIcon from '@material-ui/icons/Send';
 import StarIcon from '@material-ui/icons/Star';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+
+interface LinkProps {
+  path: string;
+  text: string;
+  children: React.ReactElement<any>;
+}
+
+const LinkItem = (props: LinkProps) => {
+  const {path, text, children} = props;
+  const ResolveLink = (spread: any) => <Link to={path} {...spread} />
+  return (<ListItem button={true} component={ResolveLink}>
+    <ListItemIcon>
+      {children}
+    </ListItemIcon>
+    <ListItemText primary={text} />
+  </ListItem>);
+}
 
 export const mailFolderListItems = (
-    <div>
-      <ListItem button={true}>
-        <ListItemIcon>
-          <InboxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Inbox" />
-      </ListItem>
-      <ListItem button={true}>
-        <ListItemIcon>
-          <StarIcon />
-        </ListItemIcon>
-        <ListItemText primary="Starred" />
-      </ListItem>
-      <ListItem button={true}>
-        <ListItemIcon>
-          <SendIcon />
-        </ListItemIcon>
-        <ListItemText primary="Send mail" />
-      </ListItem>
-      <ListItem button={true}>
-        <ListItemIcon>
-          <DraftsIcon />
-        </ListItemIcon>
-        <ListItemText primary="Drafts" />
-      </ListItem>
-    </div>
-  )
+  <div>
+    <LinkItem path="/home" text="Home">
+      <InboxIcon />
+    </LinkItem>
+    <LinkItem path="/todo" text="Todo">
+      <StarIcon />
+    </LinkItem>
+    <LinkItem path="/email/send" text="Send mail">
+      <SendIcon />
+    </LinkItem>
+    <LinkItem path="/drafts" text="Drafts">
+      <DraftsIcon />
+    </LinkItem>
+  </div>
+)
